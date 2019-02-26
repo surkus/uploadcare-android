@@ -1,5 +1,15 @@
 package com.uploadcare.android.widget.activity;
 
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+
 import com.uploadcare.android.library.api.UploadcareFile;
 import com.uploadcare.android.library.callbacks.UploadcareFileCallback;
 import com.uploadcare.android.library.exceptions.UploadcareApiException;
@@ -10,20 +20,16 @@ import com.uploadcare.android.widget.controller.UploadcareWidget;
 import com.uploadcare.android.widget.data.SocialSource;
 import com.uploadcare.android.widget.data.SocialSourcesResponse;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -39,6 +45,7 @@ public class UploadcareActivity extends AppCompatActivity {
     public static final int MEDIA_TYPE_IMAGE = 1;
 
     public static final int MEDIA_TYPE_VIDEO = 2;
+    private static final int PERMISSIONS_REQUEST_CAMERA = 42;
 
     private SocialSourcesResponse mSocialSources;
 
@@ -173,17 +180,27 @@ public class UploadcareActivity extends AppCompatActivity {
     private void launchNetwork(SocialSource socialSource) {
         switch (socialSource.name) {
             case UploadcareWidget.SOCIAL_NETWORK_CAMERA:
-                tempFileUri = null;
-                // create Intent to take a picture and return control to the calling application
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-                tempFileUri = getOutputMediaFileUri(
-                        MEDIA_TYPE_IMAGE); // create a file to save the image
-                cameraIntent
-                        .putExtra(MediaStore.EXTRA_OUTPUT, tempFileUri); // set the image file name
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                        // Permission is not granted
+                        // Should we show an explanation?
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                            Manifest.permission.READ_CONTACTS)) {
+                            // Show an explanation to the user *asynchronously* -- don't block
+                            // this thread waiting for the user's response! After the user
+                            // sees the explanation, try again to request the permission.
+                        } else {
+                            // No explanation needed; request the permission
+                            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSIONS_REQUEST_CAMERA);
 
-                // start the image capture Intent
-                startActivityForResult(cameraIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                        }
+                    } else {
+                        startCamera();
+                    }
+                } else {
+                    startCamera();
+                }
                 break;
             case UploadcareWidget.SOCIAL_NETWORK_VIDEOCAM:
                 tempFileUri = null;
@@ -219,6 +236,19 @@ public class UploadcareActivity extends AppCompatActivity {
                 finish();
                 break;
         }
+    }
+
+    private void startCamera() {
+        // start the image capture Intent
+        tempFileUri = null;
+        // create Intent to take a picture and return control to the calling application
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        tempFileUri = getOutputMediaFileUri(
+            MEDIA_TYPE_IMAGE); // create a file to save the image
+        cameraIntent
+            .putExtra(MediaStore.EXTRA_OUTPUT, tempFileUri); // set the image file name
+        startActivityForResult(cameraIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
     /**
@@ -333,6 +363,26 @@ public class UploadcareActivity extends AppCompatActivity {
                 return "video/*";
             default:
                 return "*/*";
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_CAMERA: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted
+                    // start the image capture Intent
+                    startCamera();
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+
+            }
         }
     }
 }

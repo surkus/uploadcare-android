@@ -1,5 +1,16 @@
 package com.uploadcare.android.widget.fragment;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.SearchView;
+
 import com.uploadcare.android.widget.R;
 import com.uploadcare.android.widget.adapter.FilesAdapter;
 import com.uploadcare.android.widget.adapter.FilesGridAdapter;
@@ -13,25 +24,14 @@ import com.uploadcare.android.widget.data.Thing;
 import com.uploadcare.android.widget.interfaces.ItemTapListener;
 import com.uploadcare.android.widget.utils.RecyclerViewOnScrollListener;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.SearchView;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.AnimationAdapter;

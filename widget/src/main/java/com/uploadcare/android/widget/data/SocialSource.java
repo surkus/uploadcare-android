@@ -9,7 +9,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.webkit.CookieManager;
 
 import java.util.ArrayList;

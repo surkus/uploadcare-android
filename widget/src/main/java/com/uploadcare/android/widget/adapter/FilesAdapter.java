@@ -1,6 +1,9 @@
 package com.uploadcare.android.widget.adapter;
 
 
+import android.content.Context;
+import android.view.ViewGroup;
+
 import com.uploadcare.android.widget.R;
 import com.uploadcare.android.widget.controller.UploadcareWidget;
 import com.uploadcare.android.widget.data.Action;
@@ -8,13 +11,11 @@ import com.uploadcare.android.widget.data.Path;
 import com.uploadcare.android.widget.data.Thing;
 import com.uploadcare.android.widget.interfaces.ItemTapListener;
 
-import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class FilesAdapter<T extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<T> {
 

@@ -1,5 +1,6 @@
 package com.uploadcare.android.widget.activity;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.uploadcare.android.library.api.UploadcareFile;
 import com.uploadcare.android.library.callbacks.UploadcareFileCallback;
 import com.uploadcare.android.library.exceptions.UploadcareApiException;
@@ -15,12 +16,6 @@ import com.uploadcare.android.widget.fragment.UploadcareFilesFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +25,11 @@ import android.widget.Spinner;
 
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.FragmentManager;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

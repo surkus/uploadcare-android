@@ -2,7 +2,7 @@ package com.uploadcare.android.library.urls;
 
 import com.uploadcare.android.library.api.UploadcareFile;
 
-import android.support.annotation.StringDef;
+import androidx.annotation.StringDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -1,5 +1,12 @@
 package com.uploadcare.android.widget.adapter;
 
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+
 import com.squareup.picasso.Picasso;
 import com.uploadcare.android.widget.BuildConfig;
 import com.uploadcare.android.widget.R;
@@ -8,13 +15,7 @@ import com.uploadcare.android.widget.data.Thing;
 import com.uploadcare.android.widget.interfaces.ItemTapListener;
 import com.uploadcare.android.widget.view.SquaredImageView;
 
-import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class FilesGridAdapter extends FilesAdapter<FilesGridAdapter.ThingViewHolder> {
 

@@ -9,7 +9,7 @@ import com.uploadcare.android.widget.interfaces.SocialApi;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.StringDef;
+import androidx.annotation.StringDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
